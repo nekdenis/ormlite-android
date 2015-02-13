@@ -14,10 +14,11 @@ import com.j256.ormlite.dao.Dao;
  * 
  * @author EgorAnd
  */
-public abstract class BaseOrmLiteLoader<T, ID> extends AsyncTaskLoader<List<T>> {
+public abstract class BaseOrmLiteLoader<T, ID> extends AsyncTaskLoader<List<T>>  implements Dao.DaoObserver{
 
 	private final Dao<T, ID> dao;
 	private List<T> cachedResults;
+	private DataProcessor dataProcessor;
 
 	public BaseOrmLiteLoader(Context context, Dao<T, ID> dao) {
 		super(context);
@@ -52,12 +53,20 @@ public abstract class BaseOrmLiteLoader<T, ID> extends AsyncTaskLoader<List<T>> 
 		}
 	}
 
+	public void setDataProcessor(DataProcessor dataProcessor) {
+		this.dataProcessor = dataProcessor;
+	}
+
 	protected abstract List<T> runQuery(Dao<T, ID> dao)throws SQLException;
 
 	@Override
 	public final List<T> loadInBackground() {
 		try {
-			return runQuery(dao);
+			List<T> list = runQuery(dao);
+			if (dataProcessor != null) {
+				dataProcessor.process(list);
+			}
+			return list;
 		} catch (SQLException e) {
 			return handleError(e);
 		}
