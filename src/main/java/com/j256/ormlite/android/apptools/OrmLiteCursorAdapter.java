@@ -46,7 +46,9 @@ public abstract class OrmLiteCursorAdapter<T, ViewType extends View> extends Cur
 		try {
 			@SuppressWarnings("unchecked")
 			ViewType itemViewType = (ViewType) itemView;
-			bindView(itemViewType, context, preparedQuery.mapRow(new AndroidDatabaseResults(cursor, null)));
+			if(preparedQuery!=null) {
+				bindView(itemViewType, context, preparedQuery.mapRow(new AndroidDatabaseResults(cursor, null)));
+			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
