@@ -19,7 +19,11 @@ public class OrmLitePreparedQueryLoader<T, ID> extends BaseOrmLiteLoader<T, ID> 
 	private final PreparedQuery<T> preparedQuery;
 
 	public OrmLitePreparedQueryLoader(Context context, Dao<T, ID> dao, PreparedQuery<T> preparedQuery) {
-		super(context, dao);
+		this(context,dao,preparedQuery,true);
+	}
+
+	public OrmLitePreparedQueryLoader(Context context, Dao<T, ID> dao, PreparedQuery<T> preparedQuery, boolean enableAutorefresh) {
+		super(context, dao, enableAutorefresh);
 		this.preparedQuery = preparedQuery;
 	}
 

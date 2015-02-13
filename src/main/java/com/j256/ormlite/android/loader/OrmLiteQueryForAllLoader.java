@@ -16,7 +16,10 @@ import com.j256.ormlite.dao.Dao;
 public class OrmLiteQueryForAllLoader<T, ID> extends BaseOrmLiteLoader<T, ID> {
 
 	public OrmLiteQueryForAllLoader(Context context, Dao<T, ID> dao) {
-		super(context, dao);
+		this(context, dao, true);
+	}
+	public OrmLiteQueryForAllLoader(Context context, Dao<T, ID> dao, boolean enableAutorefresh) {
+		super(context, dao, enableAutorefresh);
 	}
 
 	@Override

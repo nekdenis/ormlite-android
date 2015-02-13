@@ -25,7 +25,12 @@ public abstract class BaseOrmLiteLoader<T, ID> extends AsyncTaskLoader<List<T>> 
 			throw new IllegalArgumentException("Dao cannot be null");
 		this.dao = dao;
 	}
-
+	public BaseOrmLiteLoader(Context context, Dao<T, ID> dao, boolean enableAutorefresh) {
+		this(context, dao);
+		if(enableAutorefresh){
+			dao.registerObserver(this);
+		}
+	}
 	@Override
 	public void deliverResult(List<T> results) {
 		if (isReset())
@@ -116,5 +121,9 @@ public abstract class BaseOrmLiteLoader<T, ID> extends AsyncTaskLoader<List<T>> 
 	 */
 	protected void onReleaseResources(List<T> data)
 	{
+	}
+
+	public void onChange() {
+		onContentChanged();
 	}
 }
