@@ -12,7 +12,7 @@ import com.j256.ormlite.stmt.PreparedQuery;
 
 /**
  * Cursor adapter base class.
- * 
+ *
  * @author emmby
  */
 public abstract class OrmLiteCursorAdapter<T, ViewType extends View> extends CursorAdapter {
@@ -31,7 +31,7 @@ public abstract class OrmLiteCursorAdapter<T, ViewType extends View> extends Cur
 	/**
 	 * Final to prevent subclasses from accidentally overriding. Intentional overriding can be accomplished by
 	 * overriding {@link #doBindView(View, Context, Cursor)}.
-	 * 
+	 *
 	 * @see CursorAdapter#bindView(View, Context, Cursor)
 	 */
 	@Override
@@ -49,6 +49,15 @@ public abstract class OrmLiteCursorAdapter<T, ViewType extends View> extends Cur
 			if(preparedQuery!=null) {
 				bindView(itemViewType, context, preparedQuery.mapRow(new AndroidDatabaseResults(cursor, null)));
 			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public T getItem(int position) {
+		try {
+			return preparedQuery.mapRow(new AndroidDatabaseResults((Cursor) super.getItem(position), null));
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
