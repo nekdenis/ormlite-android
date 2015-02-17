@@ -3,6 +3,7 @@ package com.j256.ormlite.android.loader.support;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.Dao.DaoObserver;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
  *
  * @author EgorAnd
  */
-public abstract class BaseOrmLiteLoader<T, ID> extends AsyncTaskLoader<List<T>> {
+public abstract class BaseOrmLiteLoader<T, ID> extends AsyncTaskLoader<List<T>> implements DaoObserver {
 
 	private final Dao<T, ID> dao;
 	private List<T> cachedResults;
@@ -25,6 +26,7 @@ public abstract class BaseOrmLiteLoader<T, ID> extends AsyncTaskLoader<List<T>> 
 		if(dao == null)
 			throw new IllegalArgumentException("Dao cannot be null");
 		this.dao = dao;
+		dao.registerObserver(this);
 	}
 
 	@Override
@@ -107,6 +109,13 @@ public abstract class BaseOrmLiteLoader<T, ID> extends AsyncTaskLoader<List<T>> 
 			onReleaseResources(cachedResults);
 			cachedResults = null;
 		}
+
+		// stop watching for changes
+		dao.unregisterObserver(this);
+	}
+
+	public void onChange() {
+		onContentChanged();
 	}
 
 	/**

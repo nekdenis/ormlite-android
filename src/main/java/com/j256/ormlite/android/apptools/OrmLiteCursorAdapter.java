@@ -47,20 +47,30 @@ public abstract class OrmLiteCursorAdapter<T, ViewType extends View> extends Cur
 			@SuppressWarnings("unchecked")
 			ViewType itemViewType = (ViewType) itemView;
 			if(preparedQuery!=null) {
-				bindView(itemViewType, context, preparedQuery.mapRow(new AndroidDatabaseResults(cursor, null)));
+				bindView(itemViewType, context, cursorToObject(cursor));
+
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	@Override
-	public T getItem(int position) {
+	/**
+	 * Returns a T object at the current position.
+	 */
+	public T getTypedItem(int position) {
 		try {
-			return preparedQuery.mapRow(new AndroidDatabaseResults((Cursor) super.getItem(position), null));
+			return cursorToObject((Cursor) super.getItem(position));
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	/**
+	 * Map a single row to our cursor object.
+	 */
+	protected T cursorToObject(Cursor cursor) throws SQLException {
+		return preparedQuery.mapRow(new AndroidDatabaseResults(cursor, null));
 	}
 
 	/**
