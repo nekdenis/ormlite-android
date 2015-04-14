@@ -4,7 +4,6 @@ import static com.j256.ormlite.stmt.StatementBuilder.StatementType.SELECT;
 
 import java.sql.SQLException;
 
-import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.database.Cursor;
 
@@ -19,7 +18,7 @@ import com.j256.ormlite.support.DatabaseConnection;
  * 
  * @author emmby
  */
-public class OrmLiteCursorLoader<T> extends AsyncTaskLoader<Cursor> implements DaoObserver {
+public class OrmLiteCursorLoader<T> extends FixedAsyncTaskLoader<Cursor> implements DaoObserver {
 
 	protected final Dao<T, ?> dao;
 	protected final PreparedQuery<T> query;
