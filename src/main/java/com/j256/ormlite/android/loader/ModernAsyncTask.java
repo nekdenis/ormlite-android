@@ -1,4 +1,4 @@
-package com.pandra.yesno.loader.common;
+package com.j256.ormlite.android.loader;
 
 /*
  * Copyright (C) 2011 The Android Open Source Project

@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.pandra.yesno.loader.common;
+package com.j256.ormlite.android.loader;
 
 import android.content.Context;
 import android.content.Loader;
