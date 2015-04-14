@@ -1,7 +1,8 @@
 package com.j256.ormlite.android.loader.support;
 
 import android.content.Context;
-import android.support.v4.content.AsyncTaskLoader;
+
+import com.j256.ormlite.android.loader.FixedAsyncTaskLoader;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.Dao.DaoObserver;
 
@@ -16,7 +17,7 @@ import java.util.List;
  *
  * @author EgorAnd
  */
-public abstract class BaseOrmLiteLoader<T, ID> extends AsyncTaskLoader<List<T>> implements DaoObserver {
+public abstract class BaseOrmLiteLoader<T, ID> extends FixedAsyncTaskLoader<List<T>> implements DaoObserver {
 
 	private final Dao<T, ID> dao;
 	private List<T> cachedResults;

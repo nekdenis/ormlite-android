@@ -14,7 +14,7 @@ import com.j256.ormlite.dao.Dao;
  * 
  * @author EgorAnd
  */
-public abstract class BaseOrmLiteLoader<T, ID> extends AsyncTaskLoader<List<T>>  implements Dao.DaoObserver{
+public abstract class BaseOrmLiteLoader<T, ID> extends FixedAsyncTaskLoader<List<T>> implements Dao.DaoObserver{
 
 	private final Dao<T, ID> dao;
 	private List<T> cachedResults;

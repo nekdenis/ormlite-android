@@ -2,8 +2,8 @@ package com.j256.ormlite.android.loader.support;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.support.v4.content.AsyncTaskLoader;
 import com.j256.ormlite.android.AndroidCompiledStatement;
+import com.j256.ormlite.android.loader.FixedAsyncTaskLoader;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.Dao.DaoObserver;
 import com.j256.ormlite.stmt.PreparedQuery;
@@ -18,7 +18,7 @@ import static com.j256.ormlite.stmt.StatementBuilder.StatementType.SELECT;
  * 
  * @author emmby
  */
-public class OrmLiteCursorLoader<T> extends AsyncTaskLoader<Cursor> implements DaoObserver {
+public class OrmLiteCursorLoader<T> extends FixedAsyncTaskLoader<Cursor> implements DaoObserver {
 
 	protected final Dao<T, ?> dao;
 	protected final PreparedQuery<T> query;
