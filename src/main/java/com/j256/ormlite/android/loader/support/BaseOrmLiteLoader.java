@@ -27,7 +27,6 @@ public abstract class BaseOrmLiteLoader<T, ID> extends FixedAsyncTaskLoader<List
 		if(dao == null)
 			throw new IllegalArgumentException("Dao cannot be null");
 		this.dao = dao;
-		dao.registerObserver(this);
 	}
 
 	@Override
@@ -89,6 +88,8 @@ public abstract class BaseOrmLiteLoader<T, ID> extends FixedAsyncTaskLoader<List
 		if (takeContentChanged() || cachedResults == null) {
 			forceLoad();
 		}
+		// watch for data changes
+		dao.registerObserver(this);
 	}
 
 	/**
